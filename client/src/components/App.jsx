@@ -18,7 +18,8 @@ export default class App extends React.Component {
     this.bidOnProduct = this.bidOnProduct.bind(this);
     this.searchProducts = this.searchProducts.bind(this);
     this.addItemForm = this.addItemForm.bind(this);
-    this.addItem = this.addItem.bind(this)
+    this.addItem = this.addItem.bind(this);
+    this.deleteExpiredItems = this.deleteExpiredItems.bind(this);
 
   }
 
@@ -27,7 +28,7 @@ export default class App extends React.Component {
       .then(response => this.setState({
         allProducts: response.data.slice(1),
         currentlyShowing: response.data[0]
-      }, () => console.log(this.state)))
+      }, () => this.deleteExpiredItems()))
       .catch(err => console.error(err))
   }
 
@@ -75,6 +76,18 @@ export default class App extends React.Component {
     this.setState({
       currentlyShowing: result[0]
     })
+  }
+
+  deleteExpiredItems () {
+    //to run as callback for getting new items.  delete any items whose bidding has ended
+    for (var i = 0; i < this.state.allProducts.length; i++) {
+      if (this.state.allProducts[i].ends_in === 0) {
+        var id = this.state.allProducts[i]._id;
+        Axios.delete(`/name/products/${id}`)
+        .then(() => this.getTenProducts())
+        .catch(err => console.error(err))
+      }
+    }
   }
 
   componentDidMount() {
