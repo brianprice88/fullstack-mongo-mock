@@ -1,7 +1,11 @@
 var mongoose = require('mongoose');
 // Complete the productSchema below.
-var productSchema= mongoose.Schema ({
-  
+var productSchema= new mongoose.Schema ({
+  item: {type: String},
+  min_cost: {type: Number},
+  curr_bid: {type: Number},
+  ends_in: {type: Number},
+  image: {type: String}
 });
  
  /*

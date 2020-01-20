@@ -31,9 +31,14 @@ const createProducts = () => {
 }
 
 const insertMockData = function() {
-  // Complete me please
+  var products = createProducts()
+  Product.create(products)
+  .then(() => console.log(products))
+  .catch((err) => console.error(err))
 
 };
+
+insertMockData();
 
 // NOTE: DO NOT invoke this function as part of your
 // server code - it is meant to only be run once so that

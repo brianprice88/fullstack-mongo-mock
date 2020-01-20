@@ -5,7 +5,7 @@
   "main": "./server/index.js",
   "scripts": {
     "build": "webpack -w",
-    "start": "nodemon"
+    "start": "nodemon server/index.js"
   },
   "repository": "https://github.com/atk1213/fullstack-mongo-mock",
   "license": "MIT",
