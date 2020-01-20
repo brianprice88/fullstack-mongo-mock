@@ -17,7 +17,7 @@ export default class ProductViewer extends React.Component {
         {<h5>Minimum Cost: ${min_cost}</h5>}
         <h5>Current Bid: ${curr_bid}</h5>
         <h5>Bidding Ends In: {ends_in} Day(s) </h5>
-      <input type='text' placeholder='make a bid' onChange = {(e) => this.setState({newBid: e.target.value})}></input>
+      <input type='text' placeholder='bid on this item!' onChange = {(e) => this.setState({newBid: e.target.value})}></input>
       <input type='submit' onClick = {(e) => {this.props.bidOnProduct(e, _id, this.state.newBid)}}></input>
       </div>
     )
