@@ -10,11 +10,12 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       allProducts: [],
-      currentlyShowing: ''
+      currentlyShowing: '',
     }
   this.getTenProducts = this.getTenProducts.bind(this);
   this.showcaseProduct = this.showcaseProduct.bind(this);
-  this.bidOnProduct = this.bidOnProduct.bind(this)
+  this.bidOnProduct = this.bidOnProduct.bind(this);
+  this.searchProducts = this.searchProducts.bind(this);
 
   }
 
@@ -41,6 +42,17 @@ export default class App extends React.Component {
     .catch(err => console.error(err))
   }
 
+
+  searchProducts(e, query) {
+    e.preventDefault;
+    //search existing product names based on query and give the first result
+    var result = this.state.allProducts.filter(product => product.item.toUpperCase().includes(query.toUpperCase()))
+    if (result.length === 0) {alert('sorry, no matches found')}
+    this.setState({
+      currentlyShowing: result[0]
+    })
+  }
+
   componentDidMount() {
     this.getTenProducts()
   }
@@ -55,7 +67,7 @@ export default class App extends React.Component {
         </div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search />
+            <Search searchProducts = {this.searchProducts}/>
           </div>
         </nav>
         <div className="row main-container">
