@@ -3,15 +3,29 @@ import ProductList from './ProductList';
 import ProductViewer from './ProductViewer';
 import Search from './Search';
 
-import axios from 'axios';
+import Axios from 'axios';
 
 export default class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-
+      allProducts: [],
+      currentlyShowing: ''
     }
+  this.getTenProducts = this.getTenProducts.bind(this)
+  }
 
+  getTenProducts() {
+    Axios.get('/name/products')
+    .then(response => this.setState({
+      allProducts: response.data.slice(1),
+      currentlyShowing: response.data[0]
+    }, () => console.log(this.state)))
+    .catch(err => console.error(err))
+  }
+
+  componentDidMount() {
+    this.getTenProducts()
   }
 
   render(){
@@ -29,10 +43,10 @@ export default class App extends React.Component {
         </nav>
         <div className="row main-container">
           <div className="col-md-7 product-viewer-container">
-            <ProductViewer />
+            <ProductViewer product = {this.state.currentlyShowing}/>
           </div>
           <div className="col-md-5 product-list-container">
-            <ProductList  />
+            <ProductList  products = {this.state.allProducts}/>
           </div>
         </div>
       </div>

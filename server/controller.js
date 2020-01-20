@@ -7,7 +7,6 @@ const controller = {
     return helpers.getProductsHelper()
     .then((data) => res.status(200).send(data))
     .catch(err => res.status(400).send(err))
-
   },
   post: (req, res) => {
     return helpers.postProductsHelper(req.body)
