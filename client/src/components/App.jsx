@@ -12,7 +12,10 @@ export default class App extends React.Component {
       allProducts: [],
       currentlyShowing: ''
     }
-  this.getTenProducts = this.getTenProducts.bind(this)
+  this.getTenProducts = this.getTenProducts.bind(this);
+  this.showcaseProduct = this.showcaseProduct.bind(this);
+  this.bidOnProduct = this.bidOnProduct.bind(this)
+
   }
 
   getTenProducts() {
@@ -21,6 +24,20 @@ export default class App extends React.Component {
       allProducts: response.data.slice(1),
       currentlyShowing: response.data[0]
     }, () => console.log(this.state)))
+    .catch(err => console.error(err))
+  }
+
+  showcaseProduct(product) {
+    this.setState({currentlyShowing: product})
+  }
+
+  bidOnProduct(e, _id, bid) {
+    e.preventDefault();
+    if (bid <= this.state.currentlyShowing.curr_bid) {
+      alert('You must bid above the current bid!'); return
+    }
+    Axios.put(`/name/products/${_id}`, {'curr_bid': bid})
+    .then(() => this.getTenProducts())
     .catch(err => console.error(err))
   }
 
@@ -43,10 +60,10 @@ export default class App extends React.Component {
         </nav>
         <div className="row main-container">
           <div className="col-md-7 product-viewer-container">
-            <ProductViewer product = {this.state.currentlyShowing}/>
+            <ProductViewer product = {this.state.currentlyShowing} bidOnProduct = {this.bidOnProduct}/>
           </div>
           <div className="col-md-5 product-list-container">
-            <ProductList  products = {this.state.allProducts}/>
+            <ProductList  products = {this.state.allProducts} showcaseProduct = {this.showcaseProduct}/>
           </div>
         </div>
       </div>
